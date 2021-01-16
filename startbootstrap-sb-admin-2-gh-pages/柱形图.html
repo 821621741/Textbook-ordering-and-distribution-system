@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+   <head>
+       <meta charset="utf-8">
+   </head>
+   <body style="height: 100%; margin: 0">
+       <div id="container" style="height: 100%"></div>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/echarts.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@1/dist/echarts-gl.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@1/dist/ecStat.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/extension/dataTool.min.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/map/js/china.js"></script>
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/map/js/world.js"></script>
+       <!-- <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=xfhhaTThl11qYVrqLZii6w8qE5ggnhrY&__ec_v__=20190126"></script> -->
+       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@4/dist/extension/bmap.min.js"></script>
+       <script type="text/javascript">
+var dom = document.getElementById("container");
+var myChart = echarts.init(dom);
+var app = {};
+option = null;
+// Generate data
+var category = [];
+var dottedBase = +new Date();
+var lineData = [];
+var barData = [];
+
+var all_college = ["机电工程学院","大数据学院"];
+
+for (var i = 0; i < 2; i++) {
+    var date = new Date(dottedBase += 3600 * 24 * 1000);
+    category.push([
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate()
+    ].join('-'));
+    var b = Math.random() * 200;
+    var d = Math.random() * 200;
+    barData.push(100)
+    lineData.push(200);
+}
+
+
+// option
+option = {
+    backgroundColor: '#0f375f',
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['已发放', '未发放'],
+        textStyle: {
+            color: '#ccc'
+        }
+    },
+    xAxis: {
+        data: category,
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    yAxis: {
+        splitLine: {show: false},
+        axisLine: {
+            lineStyle: {
+                color: '#ccc'
+            }
+        }
+    },
+    series: [{
+        name: 'line',
+        type: 'line',
+        smooth: true,
+        showAllSymbol: true,
+        symbol: 'emptyCircle',
+        symbolSize: 15,
+        data: lineData
+    }, {
+        name: 'bar',
+        type: 'bar',
+        barWidth: 10,
+        itemStyle: {
+            barBorderRadius: 5,
+            color: new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                    {offset: 0, color: '#14c8d4'},
+                    {offset: 1, color: '#43eec6'}
+                ]
+            )
+        },
+        data: barData
+    }, {
+        name: 'line',
+        type: 'bar',
+        barGap: '-100%',
+        barWidth: 10,
+        itemStyle: {
+            color: new echarts.graphic.LinearGradient(
+                0, 0, 0, 1,
+                [
+                    {offset: 0, color: 'rgba(20,200,212,0.5)'},
+                    {offset: 0.2, color: 'rgba(20,200,212,0.2)'},
+                    {offset: 1, color: 'rgba(20,200,212,0)'}
+                ]
+            )
+        },
+        z: -12,
+        data: lineData
+    }, {
+        name: 'dotted',
+        type: 'pictorialBar',
+        symbol: 'rect',
+        itemStyle: {
+            color: '#0f375f'
+        },
+        symbolRepeat: true,
+        symbolSize: [12, 4],
+        symbolMargin: 1,
+        z: -10,
+        data: lineData
+    }]
+};;
+if (option && typeof option === "object") {
+    myChart.setOption(option, true);
+}
+       </script>
+   </body>
+</html>
